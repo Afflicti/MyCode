@@ -155,9 +155,7 @@ int main(int argc, char *argv[])
 
     printf("Pocet zadanych cisel: %d\n", Cisla(&klad, &zap, &prum));
 
-    a=&klad;
-
-    printf("Pocet kladnych: %d", a);
+    printf("Pocet kladnych: %d", *klad);
 
     return 0;
 }
