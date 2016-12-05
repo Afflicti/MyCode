@@ -3,10 +3,12 @@
 #include <math.h>
 
 int Cisla(int *klad, int *zap, float *prum);
+int MaN(int *m, int *n, int *s);
+void Prohod(int *m, int *n);
 
 int main(int argc, char *argv[])
 {
-    int *n, i, cs=0, a1, a, b, c, d, *klad, *zap;
+    int *n, i, cs=0, a1, a, b, c, d, *klad, *zap, *m, *s=0;
     float *x, *y, v=0, *prum;
 
     if((n=(int*)malloc(sizeof(int)))==NULL)
@@ -151,11 +153,66 @@ int main(int argc, char *argv[])
 
     //4
 
-    klad=(int*)malloc(sizeof(int));
+    if((klad=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((zap=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((prum=(float*)malloc(sizeof(float)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
 
-    printf("Pocet zadanych cisel: %d\n", Cisla(&klad, &zap, &prum));
 
-    printf("Pocet kladnych: %d", *klad);
+
+    printf("Pocet zadanych cisel: %d\n", Cisla(klad, zap, prum));
+
+    printf("Pocet kladnych: %d , Pocet zapornych: %d , Prumer: %0.2f\n", *klad, *zap, *prum);
+    free(klad);
+    free(zap);
+    free(prum);
+    klad=NULL;
+    zap=NULL;
+    prum=NULL;
+
+
+    //5
+    if((s=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((m=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((n=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+
+
+    printf("Zadej m:\n");
+    scanf("%d", m);
+    printf("Zadej n:\n");
+    scanf("%d", n);
+    if(*m>*n)
+        {
+        Prohod(m, n);
+        printf("m nyni: %d , n nyni %d\n", *m, *n);
+    }
+
+    printf("Pocet cisel: %d, ", MaN(m, n, s));
+    printf("Soucet: %d\n", *s);
+
 
     return 0;
 }
@@ -188,4 +245,25 @@ int Cisla(int *klad, int *zap, float *prum)
     }while(a!=0);
     (*prum)=s/i;
     return i;
+}
+
+
+int MaN(int *m, int *n, int *s)
+{
+    int i, p=0;
+    *s=0;
+    for(i=*m;i<=*n;i++)
+        {
+        (*s)=(*s)+i;
+        p++;
+    }
+    return p;
+}
+
+void Prohod(int *m, int *n)
+{
+    int pom=0;
+    pom=(*m);
+    (*n)=pom;
+    (*m)=(*n);
 }
