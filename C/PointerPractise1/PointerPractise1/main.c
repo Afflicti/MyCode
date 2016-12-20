@@ -5,11 +5,13 @@
 int Cisla(int *klad, int *zap, float *prum);
 int MaN(int *m, int *n, int *s);
 void Prohod(int *m, int *n);
+int Bezb(int *m, int *n, int b, int *soucet, int *soucin);
+int Deleni(int a, int b, float *rdeleni, int *deleni);
 
 int main(int argc, char *argv[])
 {
-    int *n, i, cs=0, a1, a, b, c, d, *klad, *zap, *m, *s=0;
-    float *x, *y, v=0, *prum;
+    int *n, i, cs=0, a1, a, b, c, d, *klad, *zap, *m, *s=0, *soucet, *soucin, *deleni;
+    float *x, *y, v=0, *prum, *rdeleni;
 
     if((n=(int*)malloc(sizeof(int)))==NULL)
         {
@@ -213,6 +215,86 @@ int main(int argc, char *argv[])
     printf("Pocet cisel: %d, ", MaN(m, n, s));
     printf("Soucet: %d\n", *s);
 
+    free(m);
+    free(n);
+    free(s);
+    m=NULL;
+    n=NULL;
+    s=NULL;
+
+    //6
+
+    if((m=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((n=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((soucet=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((soucin=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+
+    printf("Zadej m:\n");
+    scanf("%d", m);
+    printf("Zadej n:\n");
+    scanf("%d", n);
+    printf("Zadej b:\n");
+    scanf("%d", &b);
+
+    if(*m>*n)
+        {
+        Prohod(m, n);
+        printf("m nyni: %d , n nyni %d\n", *m, *n);
+    }
+
+    printf("Pocet cisel: %d , ", Bezb(m, n, b, soucet, soucin));
+    printf("Soucet: %d , Soucin: %d\n\n", *soucet, *soucin);
+
+    free(m);
+    free(n);
+    free(soucet);
+    free(soucin);
+    m=NULL;
+    n=NULL;
+    soucet=NULL;
+    soucin=NULL;
+
+    //7
+
+    if((rdeleni=(float*)malloc(sizeof(float)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+    if((deleni=(int*)malloc(sizeof(int)))==NULL)
+        {
+         printf("Nedostatek pameti");
+         return -1;
+    }
+
+    printf("Zdej a\n");
+    scanf("%d", &a);
+    printf("Zadej b:\n");
+    scanf("%d", &b);
+
+    printf("Zbytek: %d, ", Deleni(a, b, rdeleni, deleni));
+    printf("Celociselne deleni: %d , Realne deleni: %0.2f\n", *deleni, *rdeleni);
+
+    free(rdeleni);
+    free(deleni);
+    rdeleni=NULL;
+    deleni=NULL;
 
     return 0;
 }
@@ -264,6 +346,32 @@ void Prohod(int *m, int *n)
 {
     int pom=0;
     pom=(*m);
-    (*n)=pom;
     (*m)=(*n);
+    (*n)=pom;
+}
+
+int Bezb(int *m, int *n, int b, int *soucet, int *soucin)
+{
+    int i, p=0;
+
+    *soucet=0;
+    *soucin=1;
+
+    for(i=*m;i<=*n;i++)
+        {
+        if(i%b!=0)
+            {
+            *soucet = *soucet+i;
+            *soucin = *soucin*i;
+            p++;
+        }
+    }
+    return p;
+}
+
+int Deleni(int a, int b, float *rdeleni, int *deleni)
+{
+    *rdeleni=a/(float)b;
+    *deleni=a/b;
+    return a%b;
 }
